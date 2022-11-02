@@ -85,9 +85,6 @@ def main():
         listvalue_df = turn_dataset.df[turn_dataset.df['model'].isin(turn_dataset.models.values())]
         st.dataframe(turn_dataset.generate_plotly_table(turn_dataset.models, listvalue_df).style.hide_index(), use_container_width=True)
 
-        # lv_df = dataset.df[dataset.df.model.isin(self.models.values())]
-        # st.dataframe(dataset.generate_plotly_table(self.models, df = lv_df).style.hide_index(), use_container_width=True)
-
     st.markdown('<br/>', unsafe_allow_html=True)
     
 

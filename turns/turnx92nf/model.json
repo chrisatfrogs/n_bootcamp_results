@@ -1,0 +1,9 @@
+{
+    "type": "non-fiction",
+    "models": {
+        "1.0": "Maskito 0.1.0d_mini num_seq 60",
+        "2.0": "Maskito 0.1.0d_mini num_seq 200"
+    },
+    "research_objectives": "<ol><b> <li>second try testing overall performance of \"maskito mini\" using 2 different num sequences values (60 and 200)</li><li>comparison of performance to SotA x86nf list 1</li></b></ol>",
+    "research_findings": "<ul> <li>No significant differences in performance between two different num sequences values can be found; though, on average slight preference for num seq 60</li><li>Especially with regard to criteria \"linguistic difference\" and \"overall quality\" it's getting clear that the mini maskito version is still too small and therefore has too many shortcomings with respect to uniqueness of text</li><li><b>Although underperforming the tendency indicates that a slightly bigger maskito mini could reach satisfying results; further testing required to find actual \"sweet spot\" between performance and size.</b></li></ul>"
+}
