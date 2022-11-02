@@ -1,0 +1,13 @@
+{
+    "type": "horoscope",
+    "models": {
+        "1.0": "human written: monthly",
+        "2.0": "text-davinci-002: monthly",
+        "3.0": "davinci-instruct-beta: monthly",
+        "4.0": "human written: yearly",
+        "5.0": "text-davinci-002: yearly",
+        "6.0": "davinci-instruct-beta: yearly"
+    },
+    "research_objectives": "<ol> <b> <li>How do davinci vanilla and config perform with respect to English yearly & monthly horoscopes?</li><li>How do the models compare to each other? to human written horoscopes?</li><li>Is there any significant drop in quality with regard tot config that would rule this config out even if it might produce longer texts?</li></b></ol>",
+    "research_findings": ""
+}
