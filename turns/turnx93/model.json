@@ -1,0 +1,13 @@
+{
+    "type": "horoscope",
+    "models": {
+        "1.0": "Ströer: Partner Miteinander & Erotik",
+        "2.0": "Ströer: Single Flirt & Erotik",
+        "3.0": "text-davinci-002: Single Flirt",
+        "4.0": "text-davinci-002: Single Erotik",
+        "5.0": "text-davinci-002: Partner Miteinander",
+        "6.0": "text-davinci-002: Partner Erotik"
+    },
+    "research_objectives": "<ol> <b><li>Comparison of generated vs. originals in regards to single & partner monthly horoscopes</li></b></ol>",
+    "research_findings": "<p>This turn checks human written monthly horoscope texts against generated horoscopes in regards to the topics of partnership, singlehood in terms of flirt and eroticism. <br/>All texts received in average at least 4 Likert scale points and show very little gaps in difference. In almost all cases the lists with generated texts however received higher ratings on average in every criterion. The only exception was seen in the criterion matches_style_tone where L5 resulted in slightly worse ratings than L1, probably coming from the use of colloquial language and thus leading to rather harsh wording and t.m.i<br/>There are only significant differences between original texts and generated texts: Both listvalue 1 and 2 show significant differences to the other lists in the criteria of readability, story_coherence and topic_met, while listvalue 1 is also significantly different in the criterion of info_consistency compared to L3-L6. In some cases listvalue 2 also displays differences in significance in the criteria of matches_style_tone and spelling_and grammar. <br/>The topics \"Single Flirt/Erotik\" and \"Partner Miteinander/Erotik\" show no significant differences. Due to the high ratings the topic_met criterion received we can also presume the given topics can be generated quite well.<br/><b>Generated horoscopes achieve better average ratings than human written horoscopes in all criteria and all topics</b></p>"
+}

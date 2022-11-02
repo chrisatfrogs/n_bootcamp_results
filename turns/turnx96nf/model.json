@@ -1,0 +1,11 @@
+{
+    "type": "non-fiction",
+    "models": {
+        "1.0": "Maskito v0.3.0_HYBRID",
+        "2.0": "Maskito v0.3.0b_HYBRID",
+        "3.0": "Maskito v0.3.0_RAW",
+        "4.0": "Maskito v0.3.0b_RAW"
+    },
+    "research_objectives": "<ol> <b> <li>Compare performance without and with active uniqueness scoring </li><li>Compare performances of texts with indices 1 and 5</li></b></ol>",
+    "research_findings": "<p>No significant (or at all) differences between the four lists with respect to all criteria but \"grammar\". This is rated lower with weak significance when comparing list 2 and 3. List 2 is rated higher, so the active uniqueness scoring might have had an impact here. <br/> Compared to the baseline (list 1) no indication of the uniqueness scoring imparing the quality of the model's performance can be found. \"Overall Quality\" is only slightly worse but this could be due to the lowest implicit fact check scoring. <br/><br/><b>No sign of texts being too similar to each other over the different lists can be found in the comments but could be checked for automatically again. (automated comparison of hashs and texts showed that texts were different; hashs give the image of lists 1 & 2 and 3 & 4 being identical which is not the case, though, because hashs have been generated both times on basis of tgt and not tgt 5 for lists 2 and 4)</b></p>"
+}

@@ -1,0 +1,9 @@
+{
+    "type": "horoscope",
+    "models": {
+        "1.0": "original",
+        "2.0": "text-davinci-002"
+    },
+    "research_objectives": "<ol> <li>How do horoscopes (daily) with actual english prompts perform?</li><li>How well do they meet the new topics? In comparison to originals?</li></ol>",
+    "research_findings": "<p>The results of this round are clearly in favour of the generated horoscopes from davinci compared to human written horoscope texts in English.<br />Differences are subtle but consistent and significant except for grammar. Only some minor orthography mistakes have been made. For the davinci this was due to a bug (\"Aries\" proper name in \"bounaries\" spelled \"boundAries\").<br /><br /><b>Meaning, English prompts for daily horoscopes work very well with the used davinci model and outperform even human written texts. The reviewers did not seem to make a \"generated vs. human written\" distinction between the two lists.</b></p>"
+}
