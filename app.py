@@ -12,7 +12,7 @@ st.set_page_config(layout="wide", page_title="Turn results")
 with st.sidebar:
     st.markdown('# :tada: Turn result dashboard :tada:')
     turn = st.selectbox('Select a turn', TURNS)
-    st.markdown('<br/>', unsafe_allow_html=True)
+    st.markdown('<br/><br/>', unsafe_allow_html=True)
 
 
 
