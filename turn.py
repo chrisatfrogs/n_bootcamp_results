@@ -178,11 +178,12 @@ class TurnDataset:
 
         elif self.turn_type == 'horoscope':
             fig = make_subplots(
-                rows=3, cols=2,
+                rows=4, cols=2,
                 specs = [
                     [{}, {}],
                     [{}, {}],
                     [{}, {}],
+                    [{"colspan": 2}, None],
                 ],
                 subplot_titles=self.rating_criterias
             )
