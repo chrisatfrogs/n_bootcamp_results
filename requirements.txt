@@ -4,3 +4,4 @@ seaborn
 plotly
 scipy
 streamlit
+streamlit-authenticator

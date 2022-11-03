@@ -1,0 +1,18 @@
+credentials:
+  usernames:
+    ml:
+      email: ml@ella-lab.io
+      name: Machine Learning
+      password: $2b$12$6lqD/eJnhfwRTqFRs1/Q2.gW8O2CJJF9ZoardxpCCybBZeGkYw1A2
+    tqa:
+      email: tqa@ella-lab.io
+      name: Text Quality Analysis
+      password: $2b$12$iE.neKYe2ABNPeMmm3.QheBA6LJP88O2ybuDnDGqwEsuol9fWXdYW
+cookie:
+  expiry_days: 30
+  key: some_signature_key
+  name: some_cookie_name
+preauthorized:
+  emails:
+  - ml@ella-lab.io
+  - tqa@ella-lab.io
