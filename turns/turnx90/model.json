@@ -1,0 +1,13 @@
+{
+    "type": "horoscope",
+    "models": {
+        "1.0": "Ströer: day",
+        "2.0": "Ströer: week",
+        "3.0": "Ströer: month",
+        "4.0": "text-davinci-002: day",
+        "5.0": "text-davinci-002: week",
+        "6.0": "text-davinci-002: month"
+    },
+    "research_objectives": "<ol> <b><li>Comparison of German Ströer original horoscopes and davinci</li><li>Check aspects regarding various time periods in German texts</li></b></ol>",
+    "research_findings": "<p>Overall German generated horoscopes (as already seen with regard to the EN translations) cannot be distinguished from the Ströer originals (human written) by our test reviewers.<br/>With respect to certain criteria (like \"style of writing/tone\") the originals were preferred. Generated text are highly likely to match the given topic and tone.<br/>Time periods are rarely realised in the actual texts (with both sources, original and generated). But monthly horoscopes seem to tend to refer to a specific month, as can be seen in texts from both sources.<br/>All in all the data doesn't indicate any reasons why we shouldn't proceed using davinci model with respective prompts to generate horoscopes for daily, weekly and monthly time periods. <ol> <li>List 1 vs. list 4<br/>1 is significantly better with regards to \"readability\", which means the original is preferred but on a high level.</li><li>List 2 vs. list 5<br/>davinci produced weekly horoscopes outperform originals significantly with respect to all criteria but \"readability\" and \"grammar\" (both very good results)</li><li>List 3 vs. list 6<br/>same picture as in 1 vs. 4 but with a stronger tendency to a better readability in the original</li></ol></p>"
+}
