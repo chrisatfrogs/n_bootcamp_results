@@ -66,21 +66,12 @@ authenticator = stauth.Authenticate(
 
 name, authentication_status, username = authenticator.login('Login', 'main')
 
-with st.sidebar:
-    st.markdown('# :tada: Turn result dashboard :tada:')
-    turn = st.selectbox('Select a turn', TURNS)
-    st.markdown('<br/><br/>', unsafe_allow_html=True)
-
-
-
-
-
 if authentication_status:
 
     st.write(f'Welcome *{name}*!')
     with st.sidebar:
         st.markdown('# :tada: Turn result dashboard :tada:')
-        turn = st.selectbox('Select a turn', TURNS)
+        turn = st.selectbox('Select a turn', TURNS, key='turn-selection')
         st.markdown('<br/><br/>', unsafe_allow_html=True)
     
     data = load_data(turn)
@@ -134,7 +125,6 @@ if authentication_status:
 
     st.markdown('<br/>', unsafe_allow_html=True)
     
-
     # Research findings section
     create_block(title='Research findings', markdown=research_findings)
 
