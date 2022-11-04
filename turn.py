@@ -13,9 +13,15 @@ from plotly.subplots import make_subplots
 from constants import RATING_CRITERIA_COLS, AVG_RATING_COL, COLS, GUEST_USER_ID, EXCLUDE_USER_IDS
 
 class TurnDataset:
-    def __init__(self, df: pd.DataFrame, turn: str, models: dict, turn_type: str):
-        self.df = df
+    def __init__(self, 
+        turn: str, 
+        df: pd.DataFrame, 
+        models: dict, 
+        turn_type: str):
+        
+        
         self.turn = turn
+        self.df = df
         self.turn_type = turn_type
         self.models = models
         self.clean_df()

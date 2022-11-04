@@ -67,7 +67,6 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
-
     st.write(f'Welcome *{name}*!')
     with st.sidebar:
         st.markdown('# :tada: Turn result dashboard :tada:')
@@ -84,7 +83,7 @@ if authentication_status:
     research_findings = data[turn]['research_findings']
 
     # Load dataset and charts
-    turn_dataset = TurnDataset(dataset, turn, models, turn_type)
+    turn_dataset = TurnDataset(df=dataset, turn=turn, models=models, turn_type=turn_type)
     n_texts, n_users, n_ratings = turn_dataset.get_general_info()
     listvalue_df = turn_dataset.df[turn_dataset.df['model'].isin(turn_dataset.models.values())]
     bar_chart = turn_dataset.plotly_bar_chart()
@@ -129,6 +128,7 @@ if authentication_status:
     create_block(title='Research findings', markdown=research_findings)
 
     # Mean summary section
+    st.markdown('## Mean summary')
     mean_summary = turn_dataset.eval_frame().T
     mean_summary = mean_summary.rename(columns=models)
     column_selection = st.multiselect('Select models', mean_summary.columns)
