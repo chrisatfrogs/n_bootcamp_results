@@ -7,6 +7,7 @@ from yaml import SafeLoader
 
 from turn import TurnDataset
 from constants import TURNS
+from turns.turnx103 import comments
 
 
 
@@ -126,6 +127,10 @@ if authentication_status:
     
     # Research findings section
     create_block(title='Research findings', markdown=research_findings)
+
+    if turn == 'turnx103':
+        st.markdown('## Comment summary')
+        st.markdown(comments.COMMENTS, unsafe_allow_html=True)
 
     # Mean summary section
     st.markdown('## Mean summary')
