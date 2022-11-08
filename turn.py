@@ -409,4 +409,109 @@ class TurnDataset:
                         adjusted_df.loc[ix, criterion] = adjusted_value
 
         return adjusted_df
+
+
+class NewTurnDataset(TurnDataset):
+    def __init__(self, turn: str, df: pd.DataFrame, models: dict, turn_type: str):
+        super().__init__(turn, df, models, turn_type)
+        # self.rating_criterias.remove('readability')
+        # self.rating_criterias.remove('implicit_fact_check')
+    
+    def plotly_box_plot(self):
+        """
+        Plot data in a box plot.
+        """
+        
+        if self.turn_type == 'non-fiction':
+            nf_aux_criteria = ['action_coherence',
+                            'citation_correct',
+                            'exhaustive_information',
+                            'factual_correctness',
+                            'grammar',
+                            'identical_information',
+                            'lexical_correctness',
+                            'syntactic_correctness',
+                            ]
+            nf_main_criteria = [
+                                'content_similarity',
+                                'linguistic_difference',
+                                'overall_quality'
+                            ]
+            
+            fig = make_subplots(
+                rows=7, cols=2,
+                specs = [
+                    [{}, {}],
+                    [{}, {}],
+                    [{}, {}],
+                    [{}, {}],
+                    [{"colspan": 2}, None],
+                    [{"colspan": 2}, None],
+                    [{"colspan": 2}, None],
+                ],
+                subplot_titles=nf_aux_criteria + nf_main_criteria
+            )
+
+            df = self.get_data(unbiased=True)
+            has_legend = False
+            for i, criterion in (enumerate(nf_aux_criteria + nf_main_criteria)):
+                if criterion in nf_aux_criteria:
+                    temp_df = df[[criterion, 'model']]
+                    group_labels = sorted(temp_df['model'].unique().tolist())
+                    group_data = [temp_df[temp_df['model'] == label][criterion] for label in group_labels]
+                    if i % 2 == 0:
+                        row = i // 2 + 1
+                        col = 1           
+                    else:
+                        row = i // 2 + 1
+                        col = 2
+                    for label, data in zip(group_labels, group_data):
+                        if not has_legend:
+                            fig.add_trace(go.Box(y=data, name=label, boxmean='sd', showlegend=True, jitter = 0.5, legendgroup=label), row=row, col=col)
+                        else:
+                            fig.add_trace(go.Box(y=data, name=label, boxmean='sd', showlegend=False, jitter = 0.5, legendgroup=label), row=row, col=col)
+        
+                else:
+                    temp_df = df[[criterion, 'model']]
+                    group_labels = sorted(temp_df['model'].unique().tolist())
+                    group_data = [temp_df[temp_df['model'] == label][criterion] for label in group_labels]
+                    for label, data in zip(group_labels, group_data):
+                        fig.add_trace(go.Box(x=data, name=label, boxmean='sd', jitter=0.5, showlegend=False, legendgroup=label), row=i-3, col=1)
+                has_legend = True
+
+            fig.update_layout(height=1500, width=1000, title_text="Distribution of rating criteria")
+
+        elif self.turn_type == 'horoscope':
+            fig = make_subplots(
+                rows=4, cols=2,
+                specs = [
+                    [{}, {}],
+                    [{}, {}],
+                    [{}, {}],
+                    [{"colspan": 2}, None],
+                ],
+                subplot_titles=self.rating_criterias
+            )
+            df = self.get_data(unbiased=True)
+            has_legend = False
+            for i, criterion in enumerate(self.rating_criterias):
+                temp_df = df[[criterion, 'model']]
+                group_labels = sorted(temp_df['model'].unique().tolist())
+                group_data = [temp_df[temp_df['model'] == label][criterion] for label in group_labels]
+                if i % 2 == 0:
+                    row = i // 2 + 1
+                    col = 1           
+                else:
+                    row = i // 2 + 1
+                    col = 2
+                for label, data in zip(group_labels, group_data):
+                    if not has_legend:
+                        fig.add_trace(go.Box(y=data, name=label, boxmean='sd', showlegend=True, jitter = 0.5, legendgroup=label), row=row, col=col)
+                    else:
+                        fig.add_trace(go.Box(y=data, name=label, boxmean='sd', showlegend=False, jitter = 0.5, legendgroup=label), row=row, col=col)
+                has_legend = True
+            
+
+        fig.update_layout(height=1500, width=1000, title_text="Distribution of rating criteria")
+        return fig
     

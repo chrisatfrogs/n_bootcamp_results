@@ -5,7 +5,7 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from yaml import SafeLoader
 
-from turn import TurnDataset
+from turn import TurnDataset, NewTurnDataset
 from constants import TURNS
 from turns.turnx103 import comments
 
@@ -27,6 +27,7 @@ def load_data(turn: str) -> dict:
     models = {
         float(key): value for key, value in model['models'].items()
     }
+    turn_format = model['turn_format'] if 'turn_format' in model else 'old'
     research_objectives = model['research_objectives']
     research_findings = model['research_findings']
 
@@ -34,6 +35,7 @@ def load_data(turn: str) -> dict:
         'type': turn_type,
         'dataset': pd.read_csv(dataset),
         'models': models,
+        'turn_format': turn_format,
         'research_objectives': research_objectives,
         'research_findings': research_findings
     }}
@@ -82,9 +84,13 @@ if authentication_status:
     models = data[turn]['models']
     research_objectives = data[turn]['research_objectives']
     research_findings = data[turn]['research_findings']
+    turn_format = data[turn]['turn_format']
 
     # Load dataset and charts
-    turn_dataset = TurnDataset(df=dataset, turn=turn, models=models, turn_type=turn_type)
+    if turn_format == 'old':
+        turn_dataset = TurnDataset(df=dataset, turn=turn, models=models, turn_type=turn_type)
+    else:
+        turn_dataset = NewTurnDataset(df=dataset, turn=turn, models=models, turn_type=turn_type)
     n_texts, n_users, n_ratings = turn_dataset.get_general_info()
     listvalue_df = turn_dataset.df[turn_dataset.df['model'].isin(turn_dataset.models.values())]
     bar_chart = turn_dataset.plotly_bar_chart()
@@ -153,7 +159,7 @@ if authentication_status:
     # Significance table section
     create_block(title='Significance table', markdown=significance_table)
 
-    if turn_type == 'non-fiction':
+    if turn_type == 'non-fiction' and turn_format == 'old':
         # Fact check section
         st.markdown('## Explicit and implicit fact checks')
         col10, col11 = st.columns(2)

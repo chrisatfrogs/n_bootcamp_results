@@ -1,0 +1,12 @@
+{
+    "type": "non-fiction",
+    "turn_format": "new",
+    "models": {
+        "1.0": "Maskito v0.3.0_HYBRID",
+        "2.0": "Maskito v0.3.0b_HYBRID",
+        "3.0": "Maskito v0.3.0_RAW",
+        "4.0": "Maskito v0.3.0b_RAW"
+    },
+    "research_objectives": "<ol><b><li>How do the new models (3.0 and 3.0b) perform compared to the state of the art?</li><li>Are there any significant performance differences with respect to the generation cycles (hybrid and raw)?</li></b></ol>",
+    "research_findings": ""
+}

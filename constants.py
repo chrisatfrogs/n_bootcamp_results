@@ -37,7 +37,9 @@ RATING_CRITERIA_COLS = [
     'comphrehension',        # Headline is comphrehensible
     'spelling_and_grammar',  # Headline grammar
     'info_consistency',      # Headline's infos are consistent
-    'matches_fandom'         # Story matches fandom
+    'matches_fandom',
+    'lexical_correctness',
+    'syntactic_correctness'         # Story matches fandom
 ]
 OVERALL_CRITERIA_COLUMN = 'overall_quality'
 AVG_RATING_COL = 'avg_rating'
@@ -72,6 +74,6 @@ COLS = {
     'negative_comment_topic': 'negative_comment_topic'
 }
 
-TURNS = ['turnx88nf', 'turnx90', 'turnx92nf', 'turnx93','turnx96nf','turnx97', 'turnx98nf', 'turnx100nf', 'turnx101', 'turnx102nf', 'turnx103']
+TURNS = ['turnx88nf', 'turnx90', 'turnx92nf', 'turnx93','turnx96nf','turnx97', 'turnx98nf', 'turnx100nf', 'turnx101', 'turnx102nf', 'turnx103', 'turnx104nf']
 
 
