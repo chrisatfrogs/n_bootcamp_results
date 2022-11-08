@@ -76,7 +76,7 @@ class TurnDataset:
     def _get_plot_df(self) -> pd.DataFrame:
         groupby_cols = [COLS['turn'], 'model']
 
-        data = self.get_data()
+        data = self.get_data(unbiased=True)
 
         data = self.df.groupby([COLS['story_id']] + groupby_cols, dropna=False, as_index=False).mean()
         data = pd.melt(
