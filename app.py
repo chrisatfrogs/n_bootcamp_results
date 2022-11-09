@@ -5,11 +5,11 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from yaml import SafeLoader
 
-from turn import TurnDataset, NewTurnDataset
+from turn import OldNonFictionDataset, NewNonFictionDataset, HoroscopeDataset
 from constants import TURNS
 from turns.turnx103 import comments
 
-
+## Create app_utils.py
 
 # Set the page layout to wide
 st.set_page_config(layout="wide", page_title="Turn results")
@@ -33,7 +33,7 @@ def load_data(turn: str) -> dict:
 
     return {turn: {
         'type': turn_type,
-        'dataset': pd.read_csv(dataset),
+        'dataset': dataset,
         'models': models,
         'turn_format': turn_format,
         'research_objectives': research_objectives,
@@ -86,23 +86,26 @@ if authentication_status:
     research_findings = data[turn]['research_findings']
     turn_format = data[turn]['turn_format']
 
-    # Load dataset and charts
-    if turn_format == 'old':
-        turn_dataset = TurnDataset(df=dataset, turn=turn, models=models, turn_type=turn_type)
-    else:
-        turn_dataset = NewTurnDataset(df=dataset, turn=turn, models=models, turn_type=turn_type)
+
+    if turn_type == 'non-fiction':
+        if turn_format == 'old':
+            turn_dataset = OldNonFictionDataset(turn=turn, data_source = dataset, models=models)
+        else:
+            turn_dataset = NewNonFictionDataset(turn=turn, data_source = dataset, models=models)
+    elif turn_type == 'horoscope':
+        turn_dataset = HoroscopeDataset(turn=turn, data_source = dataset, models=models)
+    
     n_texts, n_users, n_ratings = turn_dataset.get_general_info()
-    listvalue_df = turn_dataset.df[turn_dataset.df['model'].isin(turn_dataset.models.values())]
-    bar_chart = turn_dataset.plotly_bar_chart()
-    box_plot = turn_dataset.plotly_box_plot()
-    significance_table = turn_dataset.generate_significance_table()
+    listvalue_table = turn_dataset.get_list_info()
+    bar_chart = turn_dataset.get_bar_chart()
+    box_plot = turn_dataset.get_box_plot()
+    significance_table = turn_dataset.get_significance_table()
 
     st.title(f'{turn}')
     st.markdown('<br />', unsafe_allow_html=True)
 
     # Get general information about the dataset
     st.markdown('## General information')
-    n_texts, n_users, n_ratings = turn_dataset.get_general_info()
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Number of texts", n_texts)
@@ -124,10 +127,7 @@ if authentication_status:
 
     with col5:
         st.markdown('## List values')
-
-        # Get the list values
-        listvalue_df = turn_dataset.df[turn_dataset.df['model'].isin(turn_dataset.models.values())]
-        st.dataframe(turn_dataset.generate_plotly_table(turn_dataset.models, listvalue_df).style.hide_index(), use_container_width=True)
+        st.dataframe(listvalue_table.style.hide(axis="index"), use_container_width=True)
 
     st.markdown('<br/>', unsafe_allow_html=True)
     
@@ -140,13 +140,13 @@ if authentication_status:
 
     # Mean summary section
     st.markdown('## Mean summary')
-    mean_summary = turn_dataset.eval_frame().T
+    mean_summary = turn_dataset.get_mean_table()
     mean_summary = mean_summary.rename(columns=models)
     column_selection = st.multiselect('Select models', mean_summary.columns)
     if column_selection:
-        st.dataframe(mean_summary[column_selection].style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True)
+        st.dataframe(mean_summary[column_selection].style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True, height=420)
     else:
-        st.dataframe(mean_summary.style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True)
+        st.dataframe(mean_summary.style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True, height=420)
     st.markdown('<br/>', unsafe_allow_html=True)
 
     # Bar chart section
@@ -164,10 +164,10 @@ if authentication_status:
         st.markdown('## Explicit and implicit fact checks')
         col10, col11 = st.columns(2)
         with col10:
-            st.plotly_chart(turn_dataset.plotly_pie_chart('factual_correctness'), use_container_width=True)
+            st.plotly_chart(turn_dataset.get_pie_chart('factual_correctness'), use_container_width=True)
                 
         with col11:
-            st.plotly_chart(turn_dataset.plotly_pie_chart('implicit_fact_check'), use_container_width=True)
+            st.plotly_chart(turn_dataset.get_pie_chart('implicit_fact_check'), use_container_width=True)
     
     authenticator.logout('Logout', 'sidebar')
 
