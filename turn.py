@@ -308,7 +308,7 @@ class Dataset:
         fig: go._figure.Figure
             Bar chart with mean ratings for each criterion.
         '''
-        models = self.models.values()
+        models = self.data[COLS['model']].unique().tolist()
         df = self.get_unbiased_data()
         fig = go.Figure()
         for model in models:
