@@ -104,6 +104,9 @@ if authentication_status:
     st.title(f'{turn}')
     st.markdown('<br />', unsafe_allow_html=True)
 
+    if turn == 'turnx106nf':
+        st.markdown('<p style="font-size: 20px; font-weight: bold; color: red;">THIS IS AN ONGOING TURN</p>', unsafe_allow_html=True)
+
     # Get general information about the dataset
     st.markdown('## General information')
     col1, col2, col3 = st.columns(3)

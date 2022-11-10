@@ -1,0 +1,11 @@
+{
+    "type": "non-fiction",
+    "turn_format": "new",
+    "models": {
+        "1.0": "maskito_v0.3.0a_pegasus_mini",
+        "2.0": "maskito_v0.3.0b_GPT3",
+        "3.0": "maskito_v0.3.0c_large"
+    },
+    "research_objectives": "<ol><b><li>How do the new models (3.0 and 3.0b) perform compared to the state of the art?</li><li>Are there any significant performance differences with respect to the generation cycles (hybrid and raw)?</li></b></ol>",
+    "research_findings": ""
+}

@@ -74,6 +74,6 @@ COLS = {
     'negative_comment_topic': 'negative_comment_topic'
 }
 
-TURNS = ['turnx88nf', 'turnx90', 'turnx92nf', 'turnx93','turnx96nf','turnx97', 'turnx98nf', 'turnx100nf', 'turnx101', 'turnx102nf', 'turnx103', 'turnx104nf']
+TURNS = ['turnx88nf', 'turnx90', 'turnx92nf', 'turnx93','turnx96nf','turnx97', 'turnx98nf', 'turnx100nf', 'turnx101', 'turnx102nf', 'turnx103', 'turnx104nf', 'turnx106nf']
 
 
