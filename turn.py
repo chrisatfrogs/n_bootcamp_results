@@ -69,8 +69,8 @@ class Dataset:
         list_info_df = pd.DataFrame(columns = ['List value', 'Model', 'Number of ratings', 'Number of stories'])
         list_info_df['List value'] = [int(lv) for lv in self.models.keys()]
         list_info_df['Model'] = [self.models[lv] for lv in self.models.keys()]
-        list_info_df['Number of ratings'] = [self.data[self.data['listvalue'] == lv].shape[0] for lv in self.models.keys()]
-        list_info_df['Number of stories'] = [self.data[self.data['listvalue'] == lv]['story_id'].nunique() for lv in self.models.keys()]
+        list_info_df['Number of ratings'] = [self.data[self.data[COLS['model']] == model].shape[0] for model in self.models.values()]
+        list_info_df['Number of stories'] = [self.data[self.data[COLS['model']] == model]['story_id'].nunique() for model in self.models.values()]
 
         return list_info_df
 
