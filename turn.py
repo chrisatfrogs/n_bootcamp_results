@@ -477,12 +477,8 @@ class OldNonFictionDataset(Dataset):
             criterion_df = df[[criterion, COLS['model']]]
             group_labels = sorted(criterion_df[COLS['model']].unique().tolist())
             group_data = [criterion_df[criterion_df[COLS['model']] == group_label][criterion].tolist() for group_label in group_labels]
-            if criterion in self.aux_criteria:
-                row = i // 2 + 1
-                col = 1 if i % 2 == 0 else 2
-            else:
-                row = i - 3
-                col = 1
+            row =  i // 2 + 1 if criterion in self.aux_criteria else i - double_rows + 1
+            col = i % 2 + 1 if criterion in self.aux_criteria else 1
                 
             for label, data in zip(group_labels, group_data):
                 if not has_legend:
@@ -614,13 +610,8 @@ class NewNonFictionDataset(Dataset):
             criterion_df = df[[criterion, COLS['model']]]
             group_labels = sorted(criterion_df[COLS['model']].unique().tolist())
             group_data = [criterion_df[criterion_df[COLS['model']] == group_label][criterion].tolist() for group_label in group_labels]
-            if criterion in self.aux_criteria:
-                row = i // 2 + 1
-                col = 1 if i % 2 == 0 else 2
-            else:
-                row = i - 3
-                col = 1
-                
+            row =  i // 2 + 1 if criterion in self.aux_criteria else i - double_rows + 1
+            col = i % 2 + 1 if criterion in self.aux_criteria else 1
             for label, data in zip(group_labels, group_data):
                 if not has_legend:
                     fig.add_trace(go.Box(y=data, name=label, boxmean='sd', showlegend=True, jitter=0.5, legendgroup=label), row=row, col=col)
