@@ -69,8 +69,8 @@ class Dataset:
         list_info_df = pd.DataFrame(columns = ['List value', 'Model', 'Number of ratings', 'Number of stories'])
         list_info_df['List value'] = [int(lv) for lv in self.models.keys()]
         list_info_df['Model'] = [self.models[lv] for lv in self.models.keys()]
-        list_info_df['Number of ratings'] = [self.data[self.data['listvalue'] == lv].shape[0] for lv in self.models.keys()]
-        list_info_df['Number of stories'] = [self.data[self.data['listvalue'] == lv]['story_id'].nunique() for lv in self.models.keys()]
+        list_info_df['Number of ratings'] = [self.data[self.data[COLS['model']] == model].shape[0] for model in self.models.values()]
+        list_info_df['Number of stories'] = [self.data[self.data[COLS['model']] == model]['story_id'].nunique() for model in self.models.values()]
 
         return list_info_df
 
@@ -308,7 +308,7 @@ class Dataset:
         fig: go._figure.Figure
             Bar chart with mean ratings for each criterion.
         '''
-        models = self.models.values()
+        models = self.data[COLS['model']].unique().tolist()
         df = self.get_unbiased_data()
         fig = go.Figure()
         for model in models:
@@ -477,12 +477,8 @@ class OldNonFictionDataset(Dataset):
             criterion_df = df[[criterion, COLS['model']]]
             group_labels = sorted(criterion_df[COLS['model']].unique().tolist())
             group_data = [criterion_df[criterion_df[COLS['model']] == group_label][criterion].tolist() for group_label in group_labels]
-            if criterion in self.aux_criteria:
-                row = i // 2 + 1
-                col = 1 if i % 2 == 0 else 2
-            else:
-                row = i - 3
-                col = 1
+            row =  i // 2 + 1 if criterion in self.aux_criteria else i - double_rows + 1
+            col = i % 2 + 1 if criterion in self.aux_criteria else 1
                 
             for label, data in zip(group_labels, group_data):
                 if not has_legend:
@@ -614,13 +610,8 @@ class NewNonFictionDataset(Dataset):
             criterion_df = df[[criterion, COLS['model']]]
             group_labels = sorted(criterion_df[COLS['model']].unique().tolist())
             group_data = [criterion_df[criterion_df[COLS['model']] == group_label][criterion].tolist() for group_label in group_labels]
-            if criterion in self.aux_criteria:
-                row = i // 2 + 1
-                col = 1 if i % 2 == 0 else 2
-            else:
-                row = i - 3
-                col = 1
-                
+            row =  i // 2 + 1 if criterion in self.aux_criteria else i - double_rows + 1
+            col = i % 2 + 1 if criterion in self.aux_criteria else 1
             for label, data in zip(group_labels, group_data):
                 if not has_legend:
                     fig.add_trace(go.Box(y=data, name=label, boxmean='sd', showlegend=True, jitter=0.5, legendgroup=label), row=row, col=col)
