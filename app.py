@@ -12,14 +12,15 @@ from turn_class import create_session, engine, Turn
 from turns.turnx103 import comments
 from turn import OldNonFictionDataset, NewNonFictionDataset, HoroscopeDataset
 
-## Create app_utils.py
 
 # Set the page layout to wide
 st.set_page_config(layout="wide", page_title="Turn results")
-session = create_session()
 
+# Initialize database and create session
 if not sqlalchemy.inspect(engine).has_table('turns'):
     Turn.create_turns()
+
+session = create_session()
 
 @st.cache(allow_output_mutation=True)
 def load_data(turn: str) -> dict:
@@ -79,7 +80,6 @@ if authentication_status:
     st.write(f'Welcome *{name}*!')
     with st.sidebar:
         st.markdown('# :tada: Turn result dashboard :tada:')
-        
         turns = [turn[0] for turn in session.query(Turn.turn_name).order_by(Turn.turn_id).all()]
         turn = st.selectbox('Select a turn', turns, key='turn-selection')
         file_selector = None
@@ -90,10 +90,9 @@ if authentication_status:
     authenticator.logout('Logout', 'sidebar')
     
     if not file_selector:
-    
-        data = load_data(turn)
 
         # Load attributes
+        data = load_data(turn)
         turn_type = data[turn]['type']
         turn_format = data[turn]['turn_format']
         dataset = data[turn]['dataset']
@@ -109,6 +108,7 @@ if authentication_status:
         elif turn_type == 'horoscope':
             turn_dataset = HoroscopeDataset(turn=turn, data_source = dataset, models=models)
         
+        # Load charts
         n_texts, n_users, n_ratings = turn_dataset.get_general_info()
         listvalue_table = turn_dataset.get_list_info()
         bar_chart = turn_dataset.get_bar_chart()
@@ -118,6 +118,7 @@ if authentication_status:
         st.title(f'{turn}')
         st.markdown('<br />', unsafe_allow_html=True)
 
+        # Turn-specific announcements
         if turn == 'turnx106nf':
             st.markdown('<p style="font-size: 20px; font-weight: bold; color: red;">THIS IS AN ONGOING TURN</p>', unsafe_allow_html=True)
 
@@ -127,13 +128,6 @@ if authentication_status:
         with col1:
             st.metric("Number of texts", n_texts)
 
-<<<<<<< Updated upstream
-    # Get general information about the dataset
-    st.markdown('## General information')
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Number of texts", n_texts)
-=======
         with col2:
             st.metric("Number of users", n_users)
 
@@ -141,7 +135,6 @@ if authentication_status:
             st.metric("Number of ratings", n_ratings)
         
         st.markdown('<br/>', unsafe_allow_html=True)
->>>>>>> Stashed changes
 
         
         # Research objectives and List values section
@@ -159,6 +152,7 @@ if authentication_status:
         # Research findings section
         create_block(title='Research findings', markdown=research_findings)
 
+        # Turn-specific comments
         if turn == 'turnx103':
             st.markdown('## Comment summary')
             st.markdown(comments.COMMENTS, unsafe_allow_html=True)
@@ -195,9 +189,11 @@ if authentication_status:
                 st.plotly_chart(turn_dataset.get_pie_chart('implicit_fact_check'), use_container_width=True)
     
     else:
+        # Turn form
         st.markdown('# Add new turn')
         st.markdown('<br/>', unsafe_allow_html=True)
         with st.form(key='add-turn-form'):
+            # Turn metadata
             turn_id = st.text_input('Turn ID', value=uuid.uuid4(), disabled=True)
             turn_name = st.text_input('Turn name', value='turnx', key='turn-name')
             turn_type = st.selectbox('Turn type', ['non-fiction', 'horoscope'], key='turn-type')
@@ -205,6 +201,8 @@ if authentication_status:
             turn_dataset = st.file_uploader('Turn dataset', key='turn-dataset', type=['csv', 'xlsx'])
             turn_texts = st.file_uploader('Turn texts', key='turn-texts', type=['csv', 'xlsx'])
             turn_description = st.text_area('Turn description', key='turn-description')
+
+            # Turn list values
             with st.expander('List values'):
                 col1, col2 = st.columns(2)
                 with col1:
@@ -221,12 +219,15 @@ if authentication_status:
                     model_4 = st.text_input('Model 4', key='model-4')
                     model_5 = st.text_input('Model 5', key='model-5')
                     model_6 = st.text_input('Model 6', key='model-6')
+
+            # Turn research objectives and findings
             turn_objectives = st.text_area('Research objectives', key='turn-objectives', help='You can use Markdown to format the text')
             turn_findings = st.text_area('Research findings', key='turn-findings', help='You can use Markdown to format the text')
+
             submit_button = st.form_submit_button(label='Submit')
 
-        
         if submit_button:
+            # Data validation
             if turn_name is None or turn_name == '':
                 st.error('Turn name is required')
             elif turn_type is None or turn_type == '':
@@ -240,7 +241,7 @@ if authentication_status:
             elif turn_findings is None or turn_findings == '':
                 st.error('Research findings are required')
             
-
+            # Data processing
             listvalues = app_utils.create_listvalues(lv_1, lv_2, lv_3, lv_4, lv_5, lv_6, model_1, model_2, model_3, model_4, model_5, model_6)
 
             try:
