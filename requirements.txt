@@ -3,5 +3,8 @@ pandas
 seaborn
 plotly
 scipy
+markdown2
+psycopg2
+sqlalchemy
 streamlit
 streamlit-authenticator
