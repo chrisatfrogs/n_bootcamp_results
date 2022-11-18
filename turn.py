@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 from scipy.stats import t
 from plotly.subplots import make_subplots
 
-from constants import RATING_CRITERIA_COLS, AVG_RATING_COL, COLS, GUEST_USER_ID, EXCLUDE_USER_IDS
+from constants import COLS, EXCLUDE_USER_IDS
 
 class Dataset:
     '''
@@ -408,6 +408,9 @@ class Dataset:
 
 
 class OldNonFictionDataset(Dataset):
+    '''
+    Subclass of Dataset for the old non-fiction dataset.
+    '''
     def __init__(self,
         turn: str,
         data_source: str,
@@ -541,6 +544,9 @@ class OldNonFictionDataset(Dataset):
 
 
 class NewNonFictionDataset(Dataset):
+    '''
+    Subclass of the Dataset class for the new non-fiction dataset.
+    '''
     def __init__(self,
         turn: str,
         data_source: str,
