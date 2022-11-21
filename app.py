@@ -115,18 +115,14 @@ if authentication_status:
         box_plot = turn_dataset.get_box_plot()
         significance_table = turn_dataset.get_significance_table()
 
-        st.title(f'{turn}')
-        st.markdown('<br />', unsafe_allow_html=True)
-
-        # Turn-specific announcements
-        if turn == 'turnx106nf':
-            st.markdown('<p style="font-size: 20px; font-weight: bold; color: red;">THIS IS AN ONGOING TURN</p>', unsafe_allow_html=True)
-
-        # Get general information about the dataset
-        st.markdown('## General information')
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("Number of texts", n_texts)
+    st.title(f'{turn}')
+    st.markdown('<br />', unsafe_allow_html=True)
+    
+    # Get general information about the dataset
+    st.markdown('## General information')
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Number of texts", n_texts)
 
         with col2:
             st.metric("Number of users", n_users)
