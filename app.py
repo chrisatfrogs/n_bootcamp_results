@@ -133,62 +133,63 @@ if authentication_status:
             st.markdown('<br/>', unsafe_allow_html=True)
 
             
-            # Research objectives and List values section
-            col4, col5 = st.columns([0.6, 0.4])
-            with col4: 
-                st.markdown('## Research objectives')
-                st.markdown(research_objectives, unsafe_allow_html=True)
+        # Research objectives and List values section
+        col4, col5 = st.columns([0.6, 0.4])
+        with col4: 
+            st.markdown('## Research objectives')
+            st.markdown(research_objectives, unsafe_allow_html=True)
 
-            with col5:
-                st.markdown('## List values')
-                st.dataframe(listvalue_table.style.hide(axis="index"), use_container_width=True)
+        with col5:
+            st.markdown('## List values')
+            st.dataframe(listvalue_table.style.hide(axis="index"), use_container_width=True)
 
-            st.markdown('<br/>', unsafe_allow_html=True)
-            
-            # Research findings section
-            create_block(title='Research findings', markdown=research_findings)
+        st.markdown('<br/>', unsafe_allow_html=True)
+        
+        # Research findings section
+        create_block(title='Research findings', markdown=research_findings)
 
-            # Turn-specific comments
-            if turn == 'turnx103':
-                st.markdown('## Comment summary')
-                st.markdown(comments.COMMENTS, unsafe_allow_html=True)
+        # Turn-specific comments
+        if turn == 'turnx103':
+            st.markdown('## Comment summary')
+            st.markdown(comments.COMMENTS, unsafe_allow_html=True)
 
-            # Mean summary section
-            st.markdown('## Mean summary')
-            mean_summary = turn_dataset.get_mean_table()
-            mean_summary = mean_summary.rename(columns=models)
-            column_selection = st.multiselect('Select models', mean_summary.columns)
-            if column_selection:
-                st.dataframe(mean_summary[column_selection].style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True, height=420)
-            else:
-                st.dataframe(mean_summary.style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True, height=420)
-            st.markdown('<br/>', unsafe_allow_html=True)
+        # Mean summary section
+        st.markdown('## Mean summary')
+        mean_summary = turn_dataset.get_mean_table()
+        mean_summary = mean_summary.rename(columns=models)
+        column_selection = st.multiselect('Select models', mean_summary.columns)
+        if column_selection:
+            st.dataframe(mean_summary[column_selection].style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True, height=420)
+        else:
+            st.dataframe(mean_summary.style.highlight_max(axis=1, color='#6493CC').format(precision=2), use_container_width=True, height=420)
+        st.markdown('<br/>', unsafe_allow_html=True)
 
-            # Bar chart section
-            create_block(title='Bar chart', chart=bar_chart)
+        # Bar chart section
+        create_block(title='Bar chart', chart=bar_chart)
 
-            # Box plot section
-            with st.expander('Show box plots'):
-                create_block(title='Box plots', chart=box_plot)
+        # Box plot section
+        with st.expander('Show box plots'):
+            create_block(title='Box plots', chart=box_plot)
+                
+        # Significance table section
+        create_block(title='Significance table', markdown=significance_table)
+
+        if turn_type == 'non-fiction' and turn_format == 'old':
+            # Fact check section
+            st.markdown('## Explicit and implicit fact checks')
+            col10, col11 = st.columns(2)
+            with col10:
+                st.plotly_chart(turn_dataset.get_pie_chart('factual_correctness'), use_container_width=True)
                     
-            # Significance table section
-            create_block(title='Significance table', markdown=significance_table)
-
-            if turn_type == 'non-fiction' and turn_format == 'old':
-                # Fact check section
-                st.markdown('## Explicit and implicit fact checks')
-                col10, col11 = st.columns(2)
-                with col10:
-                    st.plotly_chart(turn_dataset.get_pie_chart('factual_correctness'), use_container_width=True)
-                        
-                with col11:
-                    st.plotly_chart(turn_dataset.get_pie_chart('implicit_fact_check'), use_container_width=True)
+            with col11:
+                st.plotly_chart(turn_dataset.get_pie_chart('implicit_fact_check'), use_container_width=True)
     
     else:
         # Turn form
         st.markdown('# Add new turn')
         st.markdown('<br/>', unsafe_allow_html=True)
-        with st.form(key='add-turn-form'):
+
+        with st.form(key='add-turn-form', clear_on_submit=True):
             # Turn metadata
             turn_id = st.text_input('Turn ID', value=uuid.uuid4(), disabled=True)
             turn_name = st.text_input('Turn name', value='turnx', key='turn-name')
@@ -240,6 +241,8 @@ if authentication_status:
             # Data processing
             listvalues = app_utils.create_listvalues(lv_1, lv_2, lv_3, lv_4, lv_5, lv_6, model_1, model_2, model_3, model_4, model_5, model_6)
 
+
+            # Data creation
             try:
                 app_utils.create_turn(
                     turn_uuid=turn_id,

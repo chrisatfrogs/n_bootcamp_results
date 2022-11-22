@@ -54,21 +54,29 @@ def create_turn_subfolder(turn_name: str):
     '''
     cwd = os.getcwd()
     turn_folder = os.path.join(cwd, 'turns')
+
     # Create turn subfolder
     turn_subfolder = os.path.join(turn_folder, turn_name)
+
     # Check if turn subfolder exists
     if not os.path.exists(turn_subfolder):
         # Create turn subfolder
         os.makedirs(turn_subfolder)
-    # Return turn subfolder
+
     return turn_subfolder
 
 # Create model.json with turn type and research findings
-def create_model_json(turn_subfolder: os.PathLike, list_dict: dict, turn_format: str, turn_type: str, research_objectives: str, research_findings: str):
+def create_model_json(turn_subfolder: os.PathLike, 
+    list_dict: dict, 
+    turn_format: str, 
+    turn_type: str, 
+    research_objectives: str, 
+    research_findings: str) -> str:
     '''
     Creates model.json with turn type and research findings
     '''
     model_json = os.path.join(turn_subfolder, 'model.json')
+
     # Check if model.json exists
     if not os.path.exists(model_json):
         # Create model.json
@@ -83,7 +91,7 @@ def create_model_json(turn_subfolder: os.PathLike, list_dict: dict, turn_format:
 
             json_object = json.dumps(json_data, indent=4)
             f.write(json_object)
-    # Return model.json
+
     return model_json
 
 # Copy uploaded CSV file and rename it to dataset.csv
@@ -106,13 +114,12 @@ def copy_uploaded_file(turn_subfolder: str, uploaded_file):
     '''
     # Create dataset.csv
     dataset_csv = os.path.join(turn_subfolder, 'dataset.csv')
+
     # Check if dataset.csv exists
     if not os.path.exists(dataset_csv):
         # Copy uploaded file to dataset.csv
         df = pd.read_csv(uploaded_file)
         df.to_csv(dataset_csv, index=False)
-    # Return dataset.csv
-    return dataset_csv
 
 def create_turn(turn_name: str, 
     turn_type: str,
